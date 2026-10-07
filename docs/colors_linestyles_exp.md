@@ -1,0 +1,12 @@
+# Colors and line style options for experimental data
+
+## Colors and line style options for experimental data
+On this page of the "Colors and line styles" dialog (which can be opened using the corresponding button  in the toolbar at the top of the main window), you can set the colors and line styles of the current experimental diffraction data (anchor pattern as well as additional patterns), by pressing on the "Experimental pattern settings..." button. This option was kept as some kind of "backward compatibility" (see below).
+Normally, you can change the colors and line styles used for the display of experimental diffraction patterns in two different ways:
+- Open the "Experimental patterns" window from the "Pattern" menu (or press the corresponding button
+in the main toolbar at the top). In the window that opens, please (double-) click on the corresponding color box, line style or width to change them, then press "OK".
+- As an alternative, mark an experimental diffraction pattern in the pattern graphics (either by clicking on the corresponding profile curve, peaks or its sample ID in the legend), then open the so-called "pattern menu" by clicking on the corresponding button  that becomes available in the upper-right corner (instead of the normal '+' button for importing diffraction data). From the menu that opens, run the command "Pattern settings", select color and/or line style/width (or sample ID, date/time) for the currently marked pattern in the small window that opens, then press "OK".
+Please note:
+- The "Experimental patterns..." command/button is only available if at least one diffraction pattern is present.
+- The options only apply to the current experimental data; they cannot be saved as defaults! If you would like to use different default colors for the experimental data, you should use the corresponding settings on the "Default colors" tab instead.
+- In earlier versions of Match!, the colors and line styles for experimental patterns were defined on the "Current exp. data" tab of the "Colors and line styles" dialog. Starting with Match! version 3.13, this was "outsourced" to a separate window containing a table of all currently loaded experimental diffraction patterns.

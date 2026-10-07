@@ -1,0 +1,10 @@
+# Experimental Details
+
+## Experimental Details
+In some cases, a diffraction data file does not include all information required (e.g. missing wavelength). Hence, Match! will display the "Experimental Details" dialog in which the missing data have to given by the user.
+You also can change the wavelength of the anchor pattern later on, e.g. by selecting the "Wavelength..." command from the "Pattern" menu, or simply by clicking on the radiation/wavelength label in the lower-left corner of the pattern graphics. Both will also open the "Experimental details" dialog.
+At the top of the "Experimental details" dialog, you can select the radiation type that has been used to record the diffraction pattern. The default setting "X-rays" should be appropriate in most cases.
+Below, the wavelength of the radiation has to be defined. This is even necessary if the diffraction data contain d-values instead of 2theta values, in order to enable Match! to switch to the 2theta-representation of the data. In the combo-box, you can either select a radiation source or "user defined", in which case you can enter the wavelength manually (in Angstroms).
+At the bottom of the "Experimental details" dialog, the user has to decide if the diffraction data contain 2theta or d-values (some file formats like "dif" can contain one or the other). In order to help the user with his decision, the corresponding range of values is displayed. This option may be inactive if the corresponding information is included in the diffraction data file.
+When you have adjusted all required values, please press "OK" to finish the diffraction data import.
+Note: If there are already diffraction data present when you change the radiation or wavelength, the 2theta-values of the diffraction data will be recalculated according to the new wavelength.
