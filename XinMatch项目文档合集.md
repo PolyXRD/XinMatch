@@ -127,7 +127,14 @@ for the detailed compliance boundary.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+本软件采用**双许可**模式（学术许可 + 商业许可），与上游 PolyXRD 项目一致。
+This software is distributed under a **dual license** (Academic + Commercial), consistent with the upstream PolyXRD project.
+
+- **English（英文）**: [LICENSE](LICENSE)
+- **中文（简体）**: [LICENSE-CN](LICENSE-CN)
+
+学术用途可依据【学术许可】免费使用；任何商业用途须事先联系版权持有人取得独立书面【商业授权】（详见许可证正文）。
+Academic use is free under the Academic License; any commercial use requires a separate written Commercial License from the copyright holder (see license text).
 
 ---
 
@@ -2248,7 +2255,7 @@ PySide6 原生主框架（菜单/停靠面板/表格/图谱）        ← 性能
 
 ## 8. Dependencies & licensing
 
-- No GPL-licensed runtime dependencies (would taint the MIT project).
+- No GPL-licensed runtime dependencies (would conflict with XinMatch's dual Academic + Commercial license).
 - Prefer MIT / BSD / LGPL / Apache-2.0.
 - LGPL deps (e.g. PySide6) are fine as long as we link dynamically.
 
