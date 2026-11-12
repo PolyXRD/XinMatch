@@ -46,49 +46,67 @@ workflows, published algorithms and open reference data (COD).
 > * still mountable from any folder (设置→参考数据库…, or
 >   `xinmatch libraries --add <path>`), `.xinDB` only.
 >
-> **v3.6.3** 把元素限定改成**四态 + 闭环**（口径对齐姊妹项目 PolyXRD，接口只增不改）：
-> ① 元素状态由「必含 / 排除 / 不限制」扩为「**必有**」（AND）、「**含有**」（OR，至少含一个）、
-> 「**可能**」（只放宽允许池）、「**没有**」+ 不限制，点击顺序把过滤最狠的「必有」放末位；
-> ② 新增**闭环开关**「限定在所选元素内」——未标状态的元素一律视为「没有」，
-> 于是「只允许样品里检出的这几个元素」不必再点 113 个按钮；③ 预筛新增 `elements_any`
-> 通路（原来只有「必须全含」与「含任一即淘汰」），四态的换算收敛到 `element_constraint_sets()`
-> 一处；④ 面板加「补轻元素」一键把 O/C/H/N/S 标为「含有」。旧存档、旧用法行为逐位不变
-> （闭环默认关闭），基准数字不动。
-> ⑤ **物相鉴定默认改用 FPFM 全谱拟合（不寻峰）**，下拉框仍可一键切回「峰列表 FoM（寻峰）」。
-> ⚠️ 注意：FPFM 检索链不接受元素限制条件，**要用元素限定请切回峰列表 FoM**；
-> 工具栏「样品元素」按钮在有约束 + FPFM 时会常显「｜FPFM 下不生效」提示。
-> **下载**：[GitHub Release v3.6.3](https://github.com/PolyXRD/XinMatch/releases/tag/v3.6.3)
-> （Windows 安装包，内置 COD-Inorg 默认库，开箱即可检索）；详见
-> [docs/RELEASE-NOTES-v3.6.3.md](docs/RELEASE-NOTES-v3.6.3.md)。
+> **v3.6.3** reworks element constraints into a **four-state + closed-loop** model
+> (aligned with the sibling PolyXRD project; interfaces only added, never changed):
+> ① element states grew from "must-include / exclude / no-restriction" to
+> "**must-have**" (AND), "**contains**" (OR, at least one),
+> "**possible**" (only widens the allowed pool), "**absent**" plus no-restriction; the
+> click order now puts the strictest filter "must-have" last;
+> ② a new closed-loop toggle "limit to selected elements" treats any element without a
+> state as "absent", so "only allow the elements detected in the sample" no longer needs
+> 113 button clicks; ③ prescreening gains an `elements_any` path (previously only
+> "must include all" and "reject if any present"); the four-state conversion now converges
+> in one place, `element_constraint_sets()`; ④ the panel adds a one-click "add light
+> elements" that marks O/C/H/N/S as "contains". Old saves and old usage behaviour are
+> unchanged bit-for-bit (closed-loop is off by default); benchmark numbers are unchanged.
+> ⑤ **phase identification now defaults to FPFM full-profile fitting (no peak search)**;
+> the dropdown can still switch back to "peak-list FoM (peak search)" with one click.
+> ⚠️ Note: the FPFM search chain does NOT accept element-constraint conditions — **to use
+> element constraints, switch back to peak-list FoM**; when constraints are present under
+> FPFM, the toolbar "sample elements" button permanently shows a "｜not effective under FPFM" hint.
+> **Download**: [GitHub Release v3.6.3](https://github.com/PolyXRD/XinMatch/releases/tag/v3.6.3)
+> (Windows installer, with the built-in COD-Inorg default library, ready to search out of the
+> box); see [docs/RELEASE-NOTES-v3.6.3.md](docs/RELEASE-NOTES-v3.6.3.md).
 >
-> **v3.6.2** 改的是谱图区交互（接口与数据格式均无变更）：
-> ① 谱图下方新增**参考线分区**——候选列表高亮哪个相，就在谱图正下方画出它的峰位
-> 与强度（一行一相、左标化学式、横坐标与谱图联动对齐），已确认的相也全部列进去，
-> 一眼看出「哪些峰还没被任何相匹配」；勾选框可切「只看角度位置 / 同时看强度」；
-> ② 顶部「X 轴 / Y 轴 / 适应数据范围」控制条隐藏但功能保留，切换到**点击坐标轴**上
-> （左键循环、右键菜单）；③ 谱图上方加了一排**快捷图标**（复位 / 横向框选 / 纵向框选 /
-> 区域放大 / 左右平移 / 步进缩放 / 十字线），参考姊妹项目 XinRefinement 的实现移植。
-> 详见 [docs/RELEASE-NOTES-v3.6.2.md](docs/RELEASE-NOTES-v3.6.2.md)。
+> **v3.6.2** reworks the pattern-area interaction (no interface or data-format changes):
+> ① a new **reference-line partition** under the pattern — whichever phase the candidate
+> list highlights, its peak positions and intensities are drawn directly beneath the pattern
+> (one row per phase, formula labelled on the left, x-axis aligned with the pattern); confirmed
+> phases are listed too, so you can see at a glance "which peaks are not yet matched by any phase";
+> a checkbox toggles "position only / position + intensity";
+> ② the top "X-axis / Y-axis / fit data range" control bar is hidden but its functions are kept,
+> moved to **clicking the axes** (left-click cycles, right-click opens a menu);
+> ③ a row of **quick icons** was added above the pattern (reset / horizontal box-select /
+> vertical box-select / region zoom / pan left-right / step zoom / crosshair), ported from the
+> sibling XinRefinement implementation.
+> See [docs/RELEASE-NOTES-v3.6.2.md](docs/RELEASE-NOTES-v3.6.2.md).
 >
-> **v3.6.1** 是纯缺陷修复版，修三处实测报障，接口与数据格式均无变更：
-> ① 谱图图例每条曲线**出现两次**（pyqtgraph 的 `PlotItem.addItem()` 已自动加图例，
-> 代码又手动加了一次 —— 曲线一直只有 1 条，重复的是图例行）；
-> ② Rietveld 精修向导**整窗白屏 + 卡死**（精修在 GUI 线程同步跑 GSAS-II 子进程
-> 导致「(未响应)」，同时「开始精修」按钮会滑到「下一步」的位置，连点就误触），
-> 现改为后台线程 + 动作按钮移入页面内部；③ 列表「晶系」列把**六方相标成单斜**
-> （只按「非 90° 角个数」判据，而六方唯一的非直角就是 γ=120°），已补 `H`/`R` 判据。
-> 详见 [docs/RELEASE-NOTES-v3.6.1.md](docs/RELEASE-NOTES-v3.6.1.md)。
+> **v3.6.1** is a pure bug-fix release, fixing three field-reported issues with no interface or
+> data-format changes:
+> ① each curve in the legend appeared **twice** (pyqtgraph's `PlotItem.addItem()` already
+> auto-adds the legend, and the code added it again manually — there was always only 1 curve,
+> the duplicate was the legend entry);
+> ② the Rietveld refinement wizard **white-screened + froze the whole window** (refinement ran
+> the GSAS-II subprocess synchronously on the GUI thread, causing "(Not Responding)", while the
+> "Start refinement" button slid to the "Next" position, so double-clicks mis-triggered it) —
+> now moved to a background thread with the action button moved inside the page;
+> ③ the list's "crystal system" column marked **hexagonal phases as monoclinic** (it only used
+> the "number of non-90° angles" rule, while the only non-right angle in hexagonal is γ=120°) —
+> H/R handling was added.
+> See [docs/RELEASE-NOTES-v3.6.1.md](docs/RELEASE-NOTES-v3.6.1.md).
 >
-> **v3.6.0** 补的是「能点但没反应」：15 个功能模块里有 11 个菜单动作只在状态栏
-> 播一句「模块骨架已就位」，而 `core.quant` / `core.micro` / `core.index` 早已
-> 完成。现在它们全部接上真实对话框 —— Profile Fitting（F5，谱形四选一 + Rwp +
-> 曲线叠加）、RIR 定量（绝热法，wt% 写回匹配列表）、Scherrer / Williamson-Hall
-> 微结构（D / ε / R²）、Treor90 / DicVol06 指标化（候选单胞表）、数据导出聚合
-> 菜单（谱图 ASCII + 三张表 CSV + `.xinm` + CIF）。顺带：候选列表默认显示
-> 50 行（族级覆盖 81/98 → **89/98**，计算成本为零）；峰位精修换 LM，
-> 207 峰预处理 **35.2 s → 0.35 s**、CLI 端到端 **36 s → 2.3 s**；元素周期表
-> 重做尺寸与三态编码（不再被全局 QSS 裁字）。检索默认行为逐项不变；详见
-> [docs/RELEASE-NOTES-v3.6.0.md](docs/RELEASE-NOTES-v3.6.0.md)。
+> **v3.6.0** fixes "clickable but no response": 11 of 15 function modules only played a
+> "module skeleton in place" message in the status bar, while `core.quant` / `core.micro` /
+> `core.index` were long complete. Now they all connect to real dialogs — Profile Fitting
+> (F5, four profile shapes + Rwp + curve overlay), RIR quantification (adiabatic method, wt%
+> written back to the match list), Scherrer / Williamson-Hall microstructure (D / ε / R²),
+> Treor90 / DicVol06 indexing (candidate cell table), and a data-export aggregation menu
+> (pattern ASCII + three CSV tables + `.xinm` + CIF). Bonus: the candidate list now shows 50
+> rows by default (family-level coverage 81/98 → **89/98**, at zero compute cost); peak-position
+> refinement switched to LM, 207-peak preprocessing **35.2 s → 0.35 s**, CLI end-to-end
+> **36 s → 2.3 s**; the periodic table was reworked for size and three-state encoding (no longer
+> clipped by the global QSS). Default search behaviour is unchanged item by item; see
+> [docs/RELEASE-NOTES-v3.6.0.md](docs/RELEASE-NOTES-v3.6.0.md).
 >
 > See [docs/ROADMAP_v3.md](docs/ROADMAP_v3.md) for the full implementation plan and
 > [docs/STATUS.md](docs/STATUS.md) for current progress.
@@ -201,7 +219,7 @@ powershell -File tools/ci.ps1
 > the source checkout resolves them from `../XinMatch-DataBase/data`
 > (`XINMATCH_XINDB_DIR` overrides).  Tests that need them skip themselves.
 
-### Run the working tree without building / 免打包直接运行
+### Run the working tree without building
 
 `run_dev.bat` starts the code in the working tree in place — no PyInstaller
 build and no install step, so what you see is always the latest source.
@@ -221,52 +239,54 @@ The interpreter is resolved in this order and echoed on startup:
 `python -m` loads the local `xinmatch/` package even when a different
 copy is installed in site-packages.
 
-## Builds & registration / 构建版本与注册
+## Builds & registration
 
-v1.7.0 起同时产出两个二进制。**v3.0.0 起两个版本都内置默认库** `COD-Inorg-<snapshot>.xinDB`
-（解压/安装即可检索；位置 `<程序目录>\data\`，可自行替换或再挂载其他 `.xinDB`）：
+Starting from v1.7.0, two binaries are produced. **From v3.0.0 both variants bundle the default
+library** `COD-Inorg-<snapshot>.xinDB` (unpack/install and it is ready to search; located at
+`<program dir>\data\`; you may replace it or mount other `.xinDB` libraries):
 
-| 构建 | 产物 | 注册机制 | 状态栏最右端 |
+| Build | Artifact | Registration | Right edge of status bar |
 |---|---|---|---|
-| **正式版**（release） | `XinMatch-Setup-<v>.exe`（安装时可选择安装位置） | **有**：每次启动检查注册状态 | `已注册：<单位部门名称>` / `未注册` |
-| **内部评估版**（internal） | `XinMatch-Internal-<v>.zip`（免安装，自用） | **无** | **红色加粗** `内部评估版本` |
+| **Release** | `XinMatch-Setup-<v>.exe` (choose install location) | **Yes**: checks registration status on every launch | `Registered: <org/department name>` / `Not registered` |
+| **Internal evaluation** | `XinMatch-Internal-<v>.zip` (portable, self-use) | **No** | **red bold** `Internal evaluation build` |
 
-**v3.4.0 发布产物**：
+**v3.4.0 release artifacts**:
 
-| 附件 | 体积 | SHA-256（前 16 位） |
+| Attachment | Size | SHA-256 (first 16) |
 |---|---|---|
-| `XinMatch-Setup-3.4.0.exe`（正式版安装包，内置 COD-Inorg 库） | 242.4 MiB | `4962defa7d0e4cf7…` |
-| `XinMatch-Internal-3.4.0.zip`（便携包 = 内部评估版，红字标识，内置 COD-Inorg 库） | 351.4 MiB | `fb82ce897bf4227a…` |
+| `XinMatch-Setup-3.4.0.exe` (release installer, bundled COD-Inorg library) | 242.4 MiB | `4962defa7d0e4cf7…` |
+| `XinMatch-Internal-3.4.0.zip` (portable = internal evaluation build, red-text marked, bundled COD-Inorg library) | 351.4 MiB | `fb82ce897bf4227a…` |
 | `SHA256SUMS.txt` | — | — |
 
-参考库本版未变更，两个二进制均内置 `COD-Inorg-20261020.xinDB`（重建版，78,035 相）。
-`.xinm` 导出需与 **XinRefinement 1.1.0** 配套使用。
-更大的外挂库（`PCOD` / `TCOD` / `Full` / Materials Project）在姊妹仓库
-[XinMatch-DataBase Releases](https://github.com/PolyXRD/XinMatch-DataBase/releases) 分发：
-下载 `*.xinDB.zip` → 解压 → **「设置 → 参考数据库…」** 或
-`XinMatch.exe libraries --add <path>` 挂载，可多库并存；详见
-`docs/RELEASE-NOTES-v3.4.0.md` §七。
+The reference library is unchanged in this release; both binaries bundle `COD-Inorg-20261020.xinDB`
+(rebuilt, 78,035 phases). `.xinm` export requires **XinRefinement 1.1.0** to work with.
+Larger external libraries (`PCOD` / `TCOD` / `Full` / Materials Project) are distributed from the
+sibling repo [XinMatch-DataBase Releases](https://github.com/PolyXRD/XinMatch-DataBase/releases):
+download `*.xinDB.zip` → unzip → **Settings → Reference database…** or
+`XinMatch.exe libraries --add <path>` to mount; multiple libraries can coexist; see
+`docs/RELEASE-NOTES-v3.4.0.md` §7.
 
-正式版未注册时，每次启动弹出提示：
+When the release build is unregistered, a prompt pops up on every launch:
 
-> 本软件未注册，版权所有，禁止用于商业用途。
-> 如需注册请联系 <CONTACT_REDACTED>
+> This software is unregistered. All rights reserved; commercial use is prohibited.
+> To register, contact <CONTACT_REDACTED>
 
-点「**确定**」关闭提示、软件照常使用（下次启动仍会提示）；点「**输入注册码**」粘贴注册码，
-校验通过后即完成注册，此后不再提示。也可随时通过 **帮助 → 输入注册码(&R)…** 注册。
+Click **OK** to dismiss the prompt and use the software as usual (the prompt reappears next launch);
+click **Enter registration code** and paste the code — once verified, registration completes and the
+prompt stops. You can also register at any time via **Help → Enter registration code (&R)…**.
 
-注册码由开发方根据用户提供的「单位部门名称」生成：`PXRD1-XXXX-XXXX-…`（Base32 载荷
-`UTF8(单位名) + HMAC-SHA256[:8]`），软件端重新校验并可还原单位名用于状态栏展示；
-无需联网、无需机器码，同一单位可在多台电脑使用。算法与 PolyXRD 家族统一
-（复用 `D:\Project\XRD\PolyXRD-Reg`，本仓副本 `xinmatch/utils/registration.py`）。
+Registration codes are generated by the developer from the "organization/department name" you provide:
+`PXRD1-XXXX-XXXX-…` (Base32 payload `UTF8(org name) + HMAC-SHA256[:8]`); the software re-verifies
+locally and can recover the org name for display in the status bar; no network connection or machine ID
+is required, and the same organization can use it on multiple machines. The algorithm is unified with
+the PolyXRD family (reusing `D:\Project\XRD\PolyXRD-Reg`; this repo's copy is
+`xinmatch/utils/registration.py`).
 
-## License / 授权许可
+## License
 
-本软件采用**双许可**模式（学术许可 + 商业许可），与上游 PolyXRD 项目一致。
 This software is distributed under a **dual license** (Academic + Commercial), consistent with the upstream PolyXRD project.
 
-- **English（英文）**: [LICENSE](LICENSE)
-- **中文（简体）**: [LICENSE-CN](LICENSE-CN)
+- **English**: [LICENSE](LICENSE)
+- **Chinese (Simplified)**: [LICENSE-CN](LICENSE-CN)
 
-学术用途可依据【学术许可】免费使用；任何商业用途须事先联系版权持有人取得独立书面【商业授权】（详见许可证正文）。
 Academic use is free under the Academic License; any commercial use requires a separate written Commercial License from the copyright holder (see license text).
