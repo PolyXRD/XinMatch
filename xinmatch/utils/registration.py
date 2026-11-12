@@ -70,10 +70,13 @@ _MAC_LEN = 8
 
 #: 密钥 —— **混淆级**：随软件分发，可被逆向提取。
 #: 修改密钥会使此前生成的所有注册码失效，请谨慎并同步 make_reg_code.py 的说明。
-_SECRET_KEY = b"PolyXRD::Family::Registration::<CONTACT_REDACTED>"
+#: 真实密钥通过环境变量 ``POLYXRD_REGISTRATION_KEY`` 注入（不在源码中硬编码）；
+#: 未设置时回退为空字节，注册功能仍可用但等同于无密钥保护（公开仓库默认如此）。
+_SECRET_KEY = os.environ.get("POLYXRD_REGISTRATION_KEY", "").encode("utf-8")
 
-#: 版权提示中的联系邮箱
-CONTACT_EMAIL = "<CONTACT_REDACTED>"
+#: 版权提示中的联系邮箱（通过环境变量 ``POLYXRD_CONTACT_EMAIL`` 注入；
+#: 未设置时回退占位符，部署方应自行设置后再发布）。
+CONTACT_EMAIL = os.environ.get("POLYXRD_CONTACT_EMAIL", "<your-contact@example.com>")
 
 #: 未注册启动提示文案（按需求固定）
 UNREGISTERED_NOTICE = (
